@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Learn" description="Short, plain pieces on what a birth chart is and how one is made.">
+  <section class="page-head shell">
+    <p class="eyebrow">Learn</p>
+    <h1>On birth charts, plainly.</h1>
+    <p class="lede measure">
+      Short pieces on what a chart is and how one is made. The essays arrive together with the calculation. Three notes to begin.
+    </p>
+  </section>
+
+  <section class="shell section section--last">
+    <article class="sheet prose flow">
+      <h2>What a birth chart is</h2>
+      <p>
+        A birth chart is a drawing of the sky from one place at one moment: the Sun, the Moon and the planets as they stood along the ecliptic, seen from where you were born. The twelve signs divide that circle by longitude. The houses divide it again, in most systems by the horizon and the meridian of your birthplace at that hour.
+      </p>
+
+      <h2>Why the hour matters</h2>
+      <p>
+        The rising sign changes roughly every two hours, and the houses turn with it. The Moon moves about thirteen degrees in a day. An hour from a birth certificate is worth more than a family memory. If the hour is unknown, a chart can still place the planets in their signs, and Astro will say so rather than guess.
+      </p>
+
+      <h2>What Astro will not do</h2>
+      <p>
+        Astro describes a sky. It offers no medical, psychological or financial advice, and it shows no chart it has not calculated. Where a method involves a choice, such as the house system, the choice is named on the chart.
+      </p>
+
+      <p class="note italic-note">More when the calculation is real.</p>
+    </article>
+  </section>
+</Base>
+
+<style>
+  .prose {
+    --flow: var(--space-2);
+    max-width: 44rem;
+  }
+
+  .prose h2 {
+    font-size: var(--step-2);
+    padding-top: var(--space-2);
+  }
+
+  .prose h2:not(:first-child) {
+    margin-top: var(--space-4);
+  }
+
+  .italic-note {
+    padding-top: var(--space-3);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: var(--step-1);
+    color: var(--ink);
+  }
+</style>

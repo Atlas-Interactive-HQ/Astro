@@ -1,0 +1,78 @@
+/*
+  Warm Geo v2 — Astro tokens.
+
+  Nine brand hues, used flat. No derived colours, no alpha, no gradients,
+  no shadows. Roles below map hues to jobs; components use roles, not hues.
+  The rules are enforced by scripts/brand-check.mjs (hexes, fonts, contrast).
+*/
+:root {
+  color-scheme: light;
+
+  /* Primary palette */
+  --warm-ochre: #E6A24A;
+  --deep-teal: #1F4E4A;
+  --burnt-orange: #C65A2E;
+  --terracotta: #A63D2F;
+  --soft-sand: #F2D6A2;
+
+  /* Secondary palette */
+  --muted-sage: #7FA39A;
+  --dusty-coral: #D97A5B;
+  --dark-petrol: #153937;
+  --clay-brown: #8C4A2F;
+
+  /* Roles — surfaces */
+  --field: var(--warm-ochre);   /* the page ground: warm atmosphere */
+  --paper: var(--soft-sand);    /* sheets laid on the field: forms, prose */
+  --ground: var(--deep-teal);   /* the inverted band: footer */
+
+  /* Roles — type. Contrast pairs are asserted in the brand check. */
+  --ink: var(--deep-teal);        /* headlines and structure (large type) */
+  --ink-deep: var(--dark-petrol); /* body and UI text on field and paper */
+  --on-ground: var(--soft-sand);  /* type on the teal ground */
+
+  /* Roles — accents, kept to the 10–15% the canon allows.
+     Burnt Orange is not chrome: 1.96:1 on Warm Ochre. */
+  --accent: var(--burnt-orange);
+  --accent-deep: var(--terracotta);
+  --rule: var(--muted-sage);      /* decorative hairlines only */
+  --focus: var(--dark-petrol);    /* focus ring on field and paper */
+
+  /* Type */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-text: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Scale — a calm step of roughly 1.25, fluid between 22rem and 80rem */
+  --step--1: clamp(0.85rem, 0.82rem + 0.15vw, 0.94rem);
+  --step-0: clamp(1rem, 0.96rem + 0.22vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --step-2: clamp(1.56rem, 1.36rem + 1vw, 2rem);
+  --step-3: clamp(1.95rem, 1.5rem + 2.1vw, 2.9rem);
+  --step-4: clamp(2.5rem, 1.7rem + 3.8vw, 4.4rem);
+
+  /* Space */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+  --space-7: 9rem;
+
+  /* Measure and layout */
+  --measure: 38rem;
+  --shell: 68rem;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+
+  /* Geometry — large, quiet rounding per the UI canon */
+  --radius: 0.75rem;
+  --radius-lg: 1.25rem;
+  --radius-round: 999px;
+
+  /*
+    Matte grain — a texture, not a colour. An SVG noise tile whose colour
+    matrix pins every speckle to Clay Brown; only its alpha varies. Laid over a
+    flat field with multiply blending, it reads as printed paper.
+  */
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.29 0 0 0 0 0.18 0 0 0 0.16 0'/></filter><rect width='180' height='180' filter='url(%23g)'/></svg>");
+}

@@ -1,0 +1,96 @@
+---
+/*
+  Chart input — v1 wireframe.
+
+  The controls carry no `name` attributes on purpose: submitting this form
+  transmits nothing (no query string, no request body) and lands on /reading,
+  which explains that no calculation exists yet. Names arrive together with
+  the calculation service, behind its own review. Nothing is stored.
+*/
+---
+<form class="chart-form sheet" action="/reading" method="get" aria-labelledby="chart-form-title">
+  <h2 id="chart-form-title" class="h3 chart-form__title">Three facts</h2>
+
+  <div class="field">
+    <label class="field__label" for="birth-date">Date of birth</label>
+    <p class="field__help" id="birth-date-help">Day, month and year.</p>
+    <input class="input" id="birth-date" type="date" required autocomplete="bday" aria-describedby="birth-date-help" />
+  </div>
+
+  <fieldset class="field">
+    <legend class="field__label">Time of birth</legend>
+    <p class="field__help" id="birth-time-help">
+      As exact as you have it. Without a time, Astro can place the Sun, Moon and planets in their signs, but not the houses or the rising sign.
+    </p>
+    <label class="visually-hidden" for="birth-time">Hour and minute</label>
+    <input
+      class="input"
+      id="birth-time"
+      type="time"
+      step="60"
+      autocomplete="off"
+      aria-describedby="birth-time-help"
+      data-birth-time
+    />
+    <label class="check" for="time-unknown">
+      <input id="time-unknown" type="checkbox" data-time-unknown />
+      <span>I don't know my time of birth</span>
+    </label>
+  </fieldset>
+
+  <div class="field">
+    <label class="field__label" for="birth-place">Place of birth</label>
+    <p class="field__help" id="birth-place-help">
+      Town or city, and country. Coordinates and the time zone in force on that date are resolved once the calculation exists.
+    </p>
+    <input
+      class="input"
+      id="birth-place"
+      type="text"
+      required
+      autocomplete="off"
+      spellcheck="false"
+      aria-describedby="birth-place-help"
+    />
+  </div>
+
+  <div class="chart-form__actions">
+    <button class="button" type="submit">Continue to the reading</button>
+    <p class="note">
+      Nothing you enter here is sent or stored. This is a wireframe; the calculation behind the reading is still being built.
+    </p>
+  </div>
+</form>
+
+<script>
+  // Progressive: without JavaScript both controls stay usable.
+  const timeInput = document.querySelector<HTMLInputElement>('[data-birth-time]');
+  const unknown = document.querySelector<HTMLInputElement>('[data-time-unknown]');
+
+  if (timeInput && unknown) {
+    const sync = () => {
+      timeInput.disabled = unknown.checked;
+      if (unknown.checked) timeInput.value = '';
+    };
+    unknown.addEventListener('change', sync);
+    sync();
+  }
+</script>
+
+<style>
+  .chart-form {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .chart-form__title {
+    color: var(--ink);
+  }
+
+  .chart-form__actions {
+    display: grid;
+    gap: var(--space-2);
+    justify-items: start;
+    padding-top: var(--space-1);
+  }
+</style>

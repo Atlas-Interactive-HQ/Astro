@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import SkyMark from '../components/SkyMark.astro';
+import GeoRule from '../components/GeoRule.astro';
+import { SITE_NAME } from '../lib/site';
+---
+<Base title={SITE_NAME}>
+  <section class="hero shell">
+    <SkyMark size={176} class="hero__mark" />
+    <p class="eyebrow">A birth chart, drawn from the real sky</p>
+    <h1 class="hero__title">The sky as it stood the hour you were born.</h1>
+    <p class="lede measure center">
+      Astro will draw your birth chart from the actual positions of the Sun, Moon and planets, calculated with an astronomical ephemeris. No approximations and no invented placements. The calculation is being built with care; the form is ready to see.
+    </p>
+    <div class="hero__actions">
+      <a class="button" href="/chart">Begin a chart</a>
+      <a class="link-arrow" href="/learn">What a chart is</a>
+    </div>
+  </section>
+
+  <GeoRule />
+
+  <section class="shell section section--last" aria-labelledby="principles-title">
+    <h2 id="principles-title" class="visually-hidden">How Astro works</h2>
+    <ol class="principles sheet">
+      <li class="principle">
+        <span class="principle__numeral" aria-hidden="true">I</span>
+        <h3>Three facts</h3>
+        <p>Your date, your time and your place. Nothing else is asked.</p>
+      </li>
+      <li class="principle">
+        <span class="principle__numeral" aria-hidden="true">II</span>
+        <h3>One ephemeris</h3>
+        <p>Positions come from Swiss Ephemeris or a named equivalent, never from a lookup table or a guess.</p>
+      </li>
+      <li class="principle">
+        <span class="principle__numeral" aria-hidden="true">III</span>
+        <h3>A plain reading</h3>
+        <p>Degrees, signs and houses, with the method stated beneath. No medical, psychological or financial advice.</p>
+      </li>
+    </ol>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: var(--space-3);
+    padding-block: var(--space-5) var(--space-5);
+  }
+
+  .hero__mark {
+    margin-bottom: var(--space-2);
+  }
+
+  .hero__title {
+    max-width: 20ch;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    margin-top: var(--space-2);
+  }
+
+  .principles {
+    list-style: none;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+    gap: var(--space-4);
+  }
+
+  .principle {
+    display: grid;
+    align-content: start;
+    gap: var(--space-1);
+    text-align: center;
+  }
+
+  .principle__numeral {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-3);
+    line-height: 1;
+    color: var(--accent-deep);
+  }
+
+  .principle p {
+    max-width: 28ch;
+    margin-inline: auto;
+  }
+</style>
