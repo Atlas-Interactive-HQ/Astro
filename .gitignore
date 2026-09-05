@@ -17,6 +17,12 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
+# Swiss Ephemeris commercial marker and data files — never commit
+public/se/commercial.ok
+public/se/*.se1
+public/se/*.wasm
+
+
 # macOS
 .DS_Store
 

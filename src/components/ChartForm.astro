@@ -1,11 +1,9 @@
 ---
 /*
-  Chart input — v1 wireframe.
-
-  The controls carry no `name` attributes on purpose: submitting this form
-  transmits nothing (no query string, no request body) and lands on /reading,
-  which explains that no calculation exists yet. Names arrive together with
-  the calculation service, behind its own review. Nothing is stored.
+  Chart input. Birth facts stay in this browser (sessionStorage) and are
+  never given `name` attributes, so a non-JS submit still sends nothing.
+  Place lookup uses Nominatim (network, coordinates only). The natal
+  calculation runs in WASM on /reading.
 */
 ---
 <form class="chart-form sheet" action="/reading" method="get" aria-labelledby="chart-form-title">
@@ -20,7 +18,7 @@
   <fieldset class="field">
     <legend class="field__label">Time of birth</legend>
     <p class="field__help" id="birth-time-help">
-      As exact as you have it. Without a time, Astro can place the Sun, Moon and planets in their signs, but not the houses or the rising sign.
+      As exact as you have it. Without a time, Astro places the planets at local noon and does not draw houses or the rising sign.
     </p>
     <label class="visually-hidden" for="birth-time">Hour and minute</label>
     <input
@@ -41,7 +39,7 @@
   <div class="field">
     <label class="field__label" for="birth-place">Place of birth</label>
     <p class="field__help" id="birth-place-help">
-      Town or city, and country. Coordinates and the time zone in force on that date are resolved once the calculation exists.
+      Town or city, and country. Choosing a suggestion looks the place up through OpenStreetMap Nominatim — a network request for coordinates only. The chart is calculated in this browser afterwards, and is not sent to us.
     </p>
     <input
       class="input"
@@ -51,30 +49,38 @@
       autocomplete="off"
       spellcheck="false"
       aria-describedby="birth-place-help"
+      aria-autocomplete="list"
+      aria-controls="place-suggest"
     />
+    <ul id="place-suggest" class="suggest" data-place-suggest hidden></ul>
   </div>
+
+  <fieldset class="field coords">
+    <legend class="field__label">Coordinates</legend>
+    <p class="field__help" id="coords-help">Filled when you pick a place. You may enter them yourself instead of using Nominatim.</p>
+    <div class="coords__pair">
+      <label class="field__label" for="birth-lat">Latitude</label>
+      <input class="input" id="birth-lat" type="number" step="0.0001" min="-90" max="90" inputmode="decimal" aria-describedby="coords-help" />
+    </div>
+    <div class="coords__pair">
+      <label class="field__label" for="birth-lon">Longitude</label>
+      <input class="input" id="birth-lon" type="number" step="0.0001" min="-180" max="180" inputmode="decimal" aria-describedby="coords-help" />
+    </div>
+  </fieldset>
 
   <div class="chart-form__actions">
     <button class="button" type="submit">Continue to the reading</button>
-    <p class="note">
-      Nothing you enter here is sent or stored. This is a wireframe; the calculation behind the reading is still being built.
+    <p class="note" data-form-status>
+      The natal calculation runs in this browser with Swiss Ephemeris. Place lookup is the only network call, and only if you use the suggestion list.
     </p>
   </div>
 </form>
 
 <script>
-  // Progressive: without JavaScript both controls stay usable.
-  const timeInput = document.querySelector<HTMLInputElement>('[data-birth-time]');
-  const unknown = document.querySelector<HTMLInputElement>('[data-time-unknown]');
+  import { bindChartForm } from '../lib/chart/form-client';
 
-  if (timeInput && unknown) {
-    const sync = () => {
-      timeInput.disabled = unknown.checked;
-      if (unknown.checked) timeInput.value = '';
-    };
-    unknown.addEventListener('change', sync);
-    sync();
-  }
+  const form = document.querySelector<HTMLFormElement>('form.chart-form');
+  if (form) bindChartForm(form);
 </script>
 
 <style>
@@ -92,5 +98,54 @@
     gap: var(--space-2);
     justify-items: start;
     padding-top: var(--space-1);
+  }
+
+  .suggest {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    background-color: var(--paper);
+    max-height: 12rem;
+    overflow: auto;
+  }
+
+  .suggest button {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 0;
+    background-color: var(--paper);
+    color: var(--ink-deep);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .suggest button:hover,
+  .suggest button:focus-visible {
+    background-color: var(--field);
+  }
+
+  .coords {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .coords__pair {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  @media (min-width: 36rem) {
+    .coords {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .coords legend,
+    .coords .field__help {
+      grid-column: 1 / -1;
+    }
   }
 </style>

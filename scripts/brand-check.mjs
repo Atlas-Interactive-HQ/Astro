@@ -160,9 +160,14 @@ function contrast(a, b) {
 }
 
 // --- run ---
+const DIST_EXTS = new Set(['.css', '.html', '.svg']);
+
 const files = SCAN_DIRS.flatMap((d) => {
   try {
-    return walk(join(ROOT, d));
+    const found = walk(join(ROOT, d));
+    // Bundled JS in dist carries packed geodata (tz-lookup), not colour.
+    if (d === 'dist') return found.filter((f) => DIST_EXTS.has(extname(f)));
+    return found;
   } catch {
     return [];
   }
