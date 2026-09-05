@@ -83,6 +83,11 @@ function walk(dir, out = []) {
   return out;
 }
 
+// Comments are prose, not colour: drop them before any rule looks at the text.
+function stripComments(text) {
+  return text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/<!--[\s\S]*?-->/g, '');
+}
+
 function cssContexts(file, text) {
   const ext = extname(file);
   if (ext === '.css') return [text];
@@ -151,7 +156,7 @@ const files = SCAN_DIRS.flatMap((d) => {
 
 for (const full of files) {
   const file = relative(ROOT, full);
-  const text = readFileSync(full, 'utf8');
+  const text = stripComments(readFileSync(full, 'utf8'));
   checkHexes(file, text);
   for (const css of cssContexts(file, text)) checkCss(file, css);
 }
