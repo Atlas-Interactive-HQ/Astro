@@ -1,0 +1,100 @@
+---
+import SkyMark from './SkyMark.astro';
+import { ATLAS_URL, NAV } from '../lib/site';
+
+const year = new Date().getFullYear();
+---
+<footer class="site-footer on-ground">
+  <div class="shell site-footer__inner">
+    <SkyMark size={56} tone="ground" class="site-footer__mark" />
+    <p class="site-footer__credit">
+      Astro is made by <a href={ATLAS_URL} rel="noopener">Atlas Interactive</a>.
+    </p>
+    <p class="site-footer__method">
+      Charts will be calculated with a named astronomical ephemeris. Until that is in place, Astro shows no chart.
+    </p>
+    <nav class="site-footer__nav" aria-label="Footer">
+      <ul>
+        {NAV.map(({ href, label }) => (
+          <li><a href={href}>{label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <p class="site-footer__colophon">
+      © {year} Atlas Interactive · <span class="italic">Structured worlds with human warmth.</span>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-6);
+    padding-block: var(--space-5) var(--space-4);
+    background-color: var(--ground);
+    background-image: var(--grain);
+    background-repeat: repeat;
+    background-blend-mode: multiply;
+    color: var(--on-ground);
+    text-align: center;
+  }
+
+  .site-footer__inner {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-2);
+  }
+
+  .site-footer__credit {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    color: var(--on-ground);
+  }
+
+  .site-footer__method {
+    max-width: var(--measure);
+    font-size: var(--step--1);
+    line-height: 1.6;
+  }
+
+  .site-footer a {
+    color: var(--on-ground);
+    text-decoration-color: var(--on-ground);
+  }
+
+  .site-footer a:hover {
+    text-decoration-color: var(--on-ground);
+  }
+
+  .site-footer__nav {
+    margin-top: var(--space-2);
+  }
+
+  .site-footer__nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+
+  .site-footer__nav a {
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .site-footer__nav a:hover {
+    text-decoration: underline;
+  }
+
+  .site-footer__colophon {
+    margin-top: var(--space-3);
+    font-size: var(--step--1);
+  }
+
+  .site-footer__colophon .italic {
+    font-size: var(--step-0);
+  }
+</style>

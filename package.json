@@ -1,0 +1,27 @@
+{
+  "name": "atlas-astro",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Astro — Atlas Interactive's public astrology product. v1: Warm Geo design tokens, layout shell, Home and chart-input wireframe.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check && node scripts/brand-check.mjs",
+    "check:brand": "node scripts/brand-check.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/playfair-display": "^5.3.0",
+    "astro": "^7.3.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.3"
+  }
+}

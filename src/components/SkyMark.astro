@@ -1,0 +1,46 @@
+---
+/*
+  The Astro mark: a medallion holding a sun over three layered waves.
+  Symbolic reduction per the Warm Geo canon — sky becomes a disc, horizon
+  becomes bands. Flat fills only; no strokes, no gradients. Decorative:
+  hidden from assistive technology.
+*/
+interface Props {
+  size?: number;
+  tone?: 'field' | 'ground';
+  class?: string;
+}
+
+const { size = 168, tone = 'field', class: className } = Astro.props;
+
+// Brand hues, chosen per ground so the medallion always reads against it.
+const palette =
+  tone === 'field'
+    ? { medallion: '#F2D6A2', halo: '#E6A24A', sun: '#A63D2F', far: '#7FA39A', mid: '#1F4E4A', near: '#153937' }
+    : { medallion: '#E6A24A', halo: '#F2D6A2', sun: '#A63D2F', far: '#7FA39A', mid: '#1F4E4A', near: '#153937' };
+
+const clipId = `sky-mark-clip-${tone}`;
+---
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 200 200"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <clipPath id={clipId}>
+      <circle cx="100" cy="100" r="96" />
+    </clipPath>
+  </defs>
+  <circle cx="100" cy="100" r="96" fill={palette.medallion} />
+  <circle cx="100" cy="86" r="46" fill={palette.halo} />
+  <circle cx="100" cy="86" r="28" fill={palette.sun} />
+  <g clip-path={`url(#${clipId})`}>
+    <path d="M0 132 C 34 118, 66 146, 100 132 S 166 118, 200 132 V200 H0 Z" fill={palette.far} />
+    <path d="M0 152 C 36 138, 64 166, 100 152 S 164 138, 200 152 V200 H0 Z" fill={palette.mid} />
+    <path d="M0 172 C 34 160, 66 184, 100 172 S 166 160, 200 172 V200 H0 Z" fill={palette.near} />
+  </g>
+</svg>

@@ -1,0 +1,384 @@
+/* Typefaces — self-hosted through Fontsource; no third-party font request. */
+@import '@fontsource/playfair-display/600.css';
+@import '@fontsource/playfair-display/700.css';
+@import '@fontsource/playfair-display/400-italic.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import './tokens.css';
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--field);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-text);
+  font-size: var(--step-0);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink-deep);
+  background-color: var(--field);
+  background-image: var(--grain);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+::selection {
+  background-color: var(--ink);
+  color: var(--soft-sand);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.on-ground {
+  --focus: var(--soft-sand);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Type ---------- */
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--step-4);
+  letter-spacing: -0.015em;
+}
+
+h2 {
+  font-size: var(--step-3);
+}
+
+h3,
+.h3 {
+  font-size: var(--step-1);
+  font-weight: 600;
+}
+
+p,
+ul,
+ol,
+dl {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent-deep);
+}
+
+.eyebrow {
+  font-family: var(--font-text);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-deep);
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--ink-deep);
+}
+
+.note {
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--ink-deep);
+}
+
+.italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* ---------- Layout ---------- */
+.shell {
+  width: min(100% - 2 * var(--gutter), var(--shell));
+  margin-inline: auto;
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+.center {
+  text-align: center;
+  margin-inline: auto;
+}
+
+.flow > * + * {
+  margin-top: var(--flow, var(--space-2));
+}
+
+.page-head {
+  padding-block: var(--space-5) var(--space-4);
+}
+
+.page-head > * + * {
+  margin-top: var(--space-2);
+}
+
+.page-head h1 {
+  max-width: 24ch;
+}
+
+.section {
+  padding-block: var(--space-4);
+}
+
+.section--last {
+  padding-bottom: var(--space-6);
+}
+
+/* A sheet: paper laid on the field. Carries its own grain. */
+.sheet {
+  background-color: var(--paper);
+  background-image: var(--grain);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  color: var(--ink-deep);
+}
+
+/* Geometric separator: two rules meeting a small terracotta diamond. */
+.geo-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+}
+
+.geo-rule::before,
+.geo-rule::after {
+  content: '';
+  height: 2px;
+  flex: 0 1 7rem;
+  background-color: var(--ink);
+}
+
+.geo-rule__mark {
+  width: 0.7rem;
+  height: 0.7rem;
+  flex: none;
+  background-color: var(--accent-deep);
+  transform: rotate(45deg);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: var(--space-2);
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-round);
+  background-color: var(--ink);
+  color: var(--soft-sand);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+  outline: 3px solid var(--soft-sand);
+  outline-offset: 2px;
+}
+
+/* ---------- Controls ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 3rem;
+  padding: 0.85em 1.6em;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-round);
+  background-color: var(--ink);
+  color: var(--soft-sand);
+  font-family: var(--font-text);
+  font-size: var(--step-0);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.button:hover {
+  background-color: var(--dark-petrol);
+  border-color: var(--dark-petrol);
+  color: var(--soft-sand);
+}
+
+.button--quiet {
+  background-color: transparent;
+  border-color: var(--ink-deep);
+  color: var(--ink-deep);
+}
+
+.button--quiet:hover {
+  background-color: var(--dark-petrol);
+  border-color: var(--dark-petrol);
+  color: var(--soft-sand);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-weight: 500;
+  color: var(--ink-deep);
+}
+
+.link-arrow::after {
+  content: '\2192';
+  transition: transform 0.25s ease;
+}
+
+.link-arrow:hover::after {
+  transform: translateX(0.2em);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+/* ---------- Forms ---------- */
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.field__label {
+  font-weight: 600;
+  font-size: var(--step-0);
+  color: var(--ink);
+}
+
+.field__help {
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--ink-deep);
+}
+
+.input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75em 1em;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background-color: var(--soft-sand);
+  color: var(--ink-deep);
+  font: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.input:hover {
+  border-color: var(--dark-petrol);
+}
+
+.input:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.input:disabled {
+  border-style: dashed;
+  border-color: var(--rule);
+  cursor: not-allowed;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75em;
+  font-size: var(--step-0);
+  color: var(--ink-deep);
+  cursor: pointer;
+}
+
+.check input {
+  flex: none;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--ink);
+}

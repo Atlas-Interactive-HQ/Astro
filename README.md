@@ -1,3 +1,104 @@
 # Astro
 
-Atlas Interactive's public astrology product. The scaffold arrives in the first pull request.
+Atlas Interactive's public astrology product. A birth chart, drawn from the real sky.
+
+**Status: v1 scaffold.** This repository holds the Warm Geo design system, the layout shell, the Home page and a chart-input wireframe. It calculates nothing yet, and it says so on every page where a calculation would appear.
+
+- Public site, later: `https://astro.atlas-interactive.com` (DNS, hosting and deployment are gated and handled outside this repository)
+- Studio: [Atlas Interactive](https://atlas-interactive.com)
+- Brand: Warm Geo v2. Calm printmaking, not SaaS.
+
+## What v1 is
+
+| Route | What it is |
+| --- | --- |
+| `/` | Home. One idea: a chart from real positions, not approximations. A single call to action to the chart form. |
+| `/chart` | Chart input, in wireframe. Date, time (with an "I don't know my time" option) and place of birth. Submitting transmits nothing and lands on the reading page. |
+| `/reading` | An honest empty state. No chart is shown until the calculation behind it is real. Lists what a reading will contain. |
+| `/learn` | Editorial placeholder. Three short notes in a plain voice. |
+| `/404` | Not found. |
+
+What v1 is **not**: no ephemeris, no geocoding, no time-zone resolution, no stored data, no sign-in, no Oji surfaces, no deployment. None of those is faked.
+
+## Run locally
+
+Requires Node 22.12 or newer and npm.
+
+```bash
+npm install
+npm run dev        # http://localhost:4321
+```
+
+Other scripts:
+
+```bash
+npm run build      # static build to dist/
+npm run preview    # serve dist/ locally
+npm run check      # astro check (types) + the brand check
+npm run check:brand
+```
+
+## Structure
+
+```
+astro.config.mjs        static output, site URL for canonical links only
+src/
+  styles/tokens.css     the nine Warm Geo hues, roles, type scale, spacing, grain
+  styles/global.css     fonts, base, type, layout, controls, forms
+  layouts/Base.astro    document shell: head, skip link, header, main, footer
+  components/
+    Header.astro        wordmark "Astro" and the quiet nav (Home, Chart, Learn)
+    Footer.astro        teal band with the Atlas Interactive credit
+    SkyMark.astro       the mark: a medallion holding a sun over three waves
+    GeoRule.astro       geometric separator
+    ChartForm.astro     the accessible chart-input wireframe
+  lib/site.ts           site name, URLs, nav
+  pages/                index, chart, reading, learn, 404
+public/favicon.svg
+scripts/brand-check.mjs the brand rules as an executable check
+.github/workflows/ci.yml  check + build on pull requests (no deploy)
+```
+
+## Design system
+
+Nine hues, used flat. Components refer to roles, never to hues directly.
+
+| Hue | Hex | Role in Astro |
+| --- | --- | --- |
+| Warm Ochre | `#E6A24A` | `--field`, the page ground |
+| Soft Sand | `#F2D6A2` | `--paper`, sheets laid on the field; type on the teal ground |
+| Deep Teal | `#1F4E4A` | `--ink`, headlines and structure; `--ground`, the footer band |
+| Dark Petrol | `#153937` | `--ink-deep`, body and UI text; focus ring |
+| Burnt Orange | `#C65A2E` | `--accent`, link underlines |
+| Terracotta | `#A63D2F` | `--accent-deep`, the sun, numerals, the active-nav mark |
+| Muted Sage | `#7FA39A` | `--rule`, decorative hairlines; the far wave |
+| Dusty Coral | `#D97A5B` | reserved |
+| Clay Brown | `#8C4A2F` | the grain tint |
+
+Type: Playfair Display for headlines (600, 700, 400 italic), Inter for body and UI (400, 500, 600). Both are self-hosted through Fontsource; the site makes no third-party font request.
+
+Rules, as canon states them and as `scripts/brand-check.mjs` enforces them:
+
+- No `#000000`, no `#FFFFFF`, no hex outside the nine, no `rgb()`, `hsl()`, `color-mix()` or `white`/`black` keywords.
+- No gradients, no shadows, no glass. Flat fields only. Texture comes from a matte grain tile whose colour is pinned to Clay Brown.
+- Only Playfair Display and Inter, with generic fallbacks.
+- Every text/background pairing the stylesheet uses meets WCAG AA. The check prints the measured ratios. Two consequences worth knowing: Deep Teal on Warm Ochre is 4.29:1, so it is used for large type only, and body text on the ochre field is Dark Petrol at 5.76:1.
+
+## Accessibility
+
+Semantic landmarks, a skip link, visible focus rings on every ground, labels bound to every control, help text through `aria-describedby`, `aria-current` on the active nav item, and a form that works without JavaScript (the "unknown time" toggle is progressive). A single light colour scheme is declared; a dark scheme is a later brand decision, not an omission.
+
+## Later, and gated
+
+Each of these waits for its own review and Kaje's explicit go. None is started here.
+
+- **Calculation.** Swiss Ephemeris or a named equivalent for planetary positions, houses and aspects. Swiss Ephemeris is dual-licensed (AGPL or commercial), so the licence is a decision before the code. Method, version, time zone and house system are printed beneath every chart.
+- **Place and time.** Geocoding of the birthplace and the historical time zone in force on the birth date.
+- **Hosting.** `astro.atlas-interactive.com` on Hostinger. DNS and deployment live outside this repository; the CI workflow only checks and builds.
+- **Voice.** Copy is English for v1. Dutch is a later decision.
+
+Astro gives no medical, psychological or financial advice, and shows no chart it has not calculated.
+
+## Working agreement
+
+Changes arrive by pull request against `main`. Nothing merges without Kaje's explicit yes. Nothing in this repository deploys.
