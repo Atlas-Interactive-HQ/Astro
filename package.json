@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "Astro — Atlas Interactive's public astrology product. v1: Warm Geo design tokens, layout shell, Home and chart-input wireframe.",
+  "description": "Astro — Atlas Interactive's public astrology product. v1 slice A: Warm Geo shell and in-browser Swiss Ephemeris natal chart.",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -14,15 +14,23 @@
     "check": "astro check && node scripts/brand-check.mjs && node scripts/brand-check-mutate.mjs",
     "check:brand": "node scripts/brand-check.mjs",
     "check:dist": "node scripts/brand-check.mjs --dist",
+    "test": "tsx --test src/lib/chart/*.test.ts",
+    "fixtures:se": "node scripts/generate-se-fixtures.mjs",
     "astro": "astro"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",
     "@fontsource/playfair-display": "^5.3.0",
-    "astro": "^7.3.1"
+    "@fusionstrings/swisseph-wasm": "^0.1.5",
+    "astro": "^7.3.1",
+    "luxon": "^3.7.2",
+    "tz-lookup": "^6.1.25"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@types/luxon": "^3.7.5",
+    "@types/node": "^26.4.1",
+    "tsx": "^4.23.13",
     "typescript": "^5.9.3"
   }
 }

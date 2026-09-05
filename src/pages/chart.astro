@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import ChartForm from '../components/ChartForm.astro';
 ---
-<Base title="Chart" description="Enter a date, time and place of birth. Astro's chart form, in wireframe. Nothing is sent or stored.">
+<Base title="Chart" description="Enter a date, time and place of birth. The natal chart is calculated in this browser with Swiss Ephemeris.">
   <section class="page-head shell">
     <p class="eyebrow">Chart</p>
     <h1>Begin a chart</h1>
@@ -16,10 +16,10 @@ import ChartForm from '../components/ChartForm.astro';
     <aside class="chart-aside flow" aria-labelledby="next-title">
       <h2 id="next-title" class="h3">What happens next</h2>
       <p>
-        When the calculation service exists, these three facts become coordinates, a time zone as it was on that date, and a set of positions along the ecliptic.
+        The place is resolved to coordinates (Nominatim, if you use the list) and to the IANA time zone in force on that date. Swiss Ephemeris then calculates the chart in this browser. Nothing is posted to Atlas for the calculation.
       </p>
       <p>
-        Until then, the reading page holds an honest empty state. <a href="/reading">See what it will hold.</a>
+        Without a time of birth, planets are placed at local noon. Houses and the rising sign stay blank.
       </p>
     </aside>
   </section>

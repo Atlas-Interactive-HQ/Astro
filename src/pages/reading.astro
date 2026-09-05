@@ -1,77 +1,132 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Reading" description="Astro's reading page. No chart is shown until the calculation behind it is real.">
-  <section class="page-head shell">
+<Base title="Reading" description="A natal chart calculated in the browser with Swiss Ephemeris, or an honest empty state if calculation is not configured.">
+  <section class="page-head shell reading-mount" data-reading>
     <p class="eyebrow">Reading</p>
-    <h1>No chart has been drawn yet.</h1>
+    <h1>The chart is drawn in this browser.</h1>
     <p class="lede measure">
-      This page will hold your reading. Astro shows a chart only when the calculation behind it is real: a named astronomical ephemeris, the time zone in force at your birth, and a house system stated plainly. None of that exists in this version, so nothing is shown here, and nothing is invented.
+      Enable JavaScript to calculate with Swiss Ephemeris. Birth facts are not written into the address bar. If calculation is not configured, nothing is invented.
     </p>
-  </section>
-
-  <section class="shell section section--last">
-    <div class="sheet flow reading-sheet">
-      <h2 class="h3">What will appear here</h2>
-      <dl class="spec">
-        <div class="spec__row">
-          <dt>Positions</dt>
-          <dd>The Sun, Moon and planets, to the degree and minute of the ecliptic.</dd>
-        </div>
-        <div class="spec__row">
-          <dt>Houses</dt>
-          <dd>Twelve houses, with the house system named. Absent when the time of birth is unknown.</dd>
-        </div>
-        <div class="spec__row">
-          <dt>Aspects</dt>
-          <dd>The angles between bodies, listed rather than implied.</dd>
-        </div>
-        <div class="spec__row">
-          <dt>Method</dt>
-          <dd>The ephemeris and its version, the time zone used and the house system, printed beneath every chart.</dd>
-        </div>
-      </dl>
-      <div class="actions">
-        <a class="button button--quiet" href="/chart">Back to the chart form</a>
-        <a class="link-arrow" href="/learn">How charts are made</a>
-      </div>
-    </div>
+    <p><a class="button button--quiet" href="/chart">Back to the chart form</a></p>
   </section>
 </Base>
 
-<style>
-  .reading-sheet {
-    --flow: var(--space-3);
-    max-width: 44rem;
-  }
+<script>
+  import { mountReading } from '../lib/chart/reading-client';
 
-  .spec {
+  const root = document.querySelector<HTMLElement>('[data-reading]');
+  if (root) void mountReading(root);
+</script>
+
+<style is:global>
+  .reading-grid {
     display: grid;
-    gap: var(--space-2);
+    gap: var(--space-4);
+    align-items: start;
+    margin-top: var(--space-4);
   }
 
-  .spec__row {
-    display: grid;
-    gap: var(--space-1);
-    padding-top: var(--space-2);
-    border-top: 2px solid var(--rule);
-  }
-
-  @media (min-width: 40rem) {
-    .spec__row {
-      grid-template-columns: 9rem 1fr;
-      gap: var(--space-3);
+  @media (min-width: 56rem) {
+    .reading-grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     }
   }
 
-  .spec dt {
+  .reading-data {
+    --flow: var(--space-3);
+  }
+
+  .method-line {
+    margin-top: var(--space-4);
+    max-width: 50rem;
+    font-size: var(--step--1);
+    line-height: 1.55;
+    color: var(--ink-deep);
+  }
+
+  .planet-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--step-0);
+  }
+
+  .planet-table th,
+  .planet-table td {
+    padding: 0.45rem 0;
+    text-align: left;
+    border-top: 2px solid var(--rule);
+    vertical-align: baseline;
+  }
+
+  .planet-table thead th {
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-top: 0;
+  }
+
+  .planet-table tbody th {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: var(--step-0);
     color: var(--ink);
   }
 
-  .spec dd {
-    margin: 0;
+  .wheel-wrap {
+    max-width: 28rem;
+    margin-inline: auto;
+  }
+
+  .chart-wheel {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .wheel-fill {
+    fill: var(--paper);
+  }
+
+  .wheel-core {
+    fill: var(--field);
+  }
+
+  .wheel-ring,
+  .wheel-sign-ray {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 2;
+  }
+
+  .wheel-house-ray {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 1.5;
+  }
+
+  .wheel-sign {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    fill: var(--ink);
+  }
+
+  .wheel-house {
+    font-family: var(--font-text);
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--ink-deep);
+  }
+
+  .wheel-planet {
+    fill: var(--accent-deep);
+  }
+
+  .wheel-planet-name {
+    font-family: var(--font-text);
+    font-size: 10px;
+    font-weight: 600;
+    fill: var(--ink-deep);
   }
 </style>

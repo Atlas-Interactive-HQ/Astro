@@ -2,7 +2,7 @@
 
 Atlas Interactive's public astrology product. A birth chart, drawn from the real sky.
 
-**Status: v1 scaffold.** This repository holds the Warm Geo design system, the layout shell, the Home page and a chart-input wireframe. It calculates nothing yet, and it says so on every page where a calculation would appear.
+**Status: v1, slice A.** Warm Geo shell plus a natal chart calculated **in the browser** with Swiss Ephemeris 2.10.03. No aspects, no interpretive copy, no server-side ephemeris.
 
 - Public site, later: `https://astro.atlas-interactive.com` (DNS, hosting and deployment are gated and handled outside this repository)
 - Studio: [Atlas Interactive](https://atlas-interactive.com)
@@ -13,12 +13,12 @@ Atlas Interactive's public astrology product. A birth chart, drawn from the real
 | Route | What it is |
 | --- | --- |
 | `/` | Home. One idea: a chart from real positions, not approximations. A single call to action to the chart form. |
-| `/chart` | Chart input, in wireframe. Date, time (with an "I don't know my time" option) and place of birth. Submitting transmits nothing and lands on the reading page. |
-| `/reading` | An honest empty state. No chart is shown until the calculation behind it is real. Lists what a reading will contain. |
+| `/chart` | Date, time (unknown-time toggle) and place. Place suggestions use Nominatim (coordinates only). Birth facts stay in session storage — not in the URL. |
+| `/reading` | Wheel + degree table + method line, calculated in WASM. Without `public/se/commercial.ok`, a calm empty state. No invented positions. |
 | `/learn` | Editorial placeholder. Three short notes in a plain voice. |
 | `/404` | Not found. |
 
-What v1 is **not**: no ephemeris, no geocoding, no time-zone resolution, no stored data, no sign-in, no Oji surfaces, no deployment. None of those is faked.
+What this slice is **not**: no aspects list, no interpretive or medical copy, no accounts, no server-side ephemeris, no AGPL relicensing, no Hostinger/DNS changes from this branch. Mean/true lunar nodes are later.
 
 ## Run locally
 
@@ -26,8 +26,11 @@ Requires Node 22.12 or newer and npm.
 
 ```bash
 npm install
+cp public/se/commercial.ok.example public/se/commercial.ok   # requires a Swiss Ephemeris Professional License
 npm run dev        # http://localhost:4321
 ```
+
+Without `commercial.ok`, `/reading` will not calculate. See `public/se/README.md`.
 
 Other scripts:
 
@@ -35,8 +38,10 @@ Other scripts:
 npm run build      # static build to dist/
 npm run preview    # serve dist/ locally
 npm run check      # astro check (types) + the brand check + mutation test
+npm run test       # golden SE fixtures + format tests
 npm run check:brand
 npm run check:dist # brand check against dist/ (run after build)
+npm run fixtures:se
 ```
 
 ## Structure
@@ -52,10 +57,13 @@ src/
     Footer.astro        teal band with the Atlas Interactive credit
     SkyMark.astro       the mark: a medallion holding a sun over three waves
     GeoRule.astro       geometric separator
-    ChartForm.astro     the accessible chart-input wireframe
+    ChartForm.astro     chart input (Nominatim + session storage)
   lib/site.ts           site name, URLs, nav
+  lib/chart/            Swiss Ephemeris WASM, TZ, geocode, wheel
   pages/                index, chart, reading, learn, 404
 public/favicon.svg
+public/se/              commercial.ok.example + licence README (no dumps)
+scripts/generate-se-fixtures.mjs  writes golden J2000 positions from SE
 scripts/brand-check.mjs the brand rules as an executable check (`--dist` scans the build)
 scripts/brand-check-mutate.mjs  injects 21 violations and expects each to fail
 .github/workflows/ci.yml  check + build + dist brand check on pull requests (no deploy)
@@ -94,10 +102,10 @@ Semantic landmarks, a skip link, visible focus rings on every ground, labels bou
 
 Each of these waits for its own review and Kaje's explicit go. None is started here.
 
-- **Calculation.** Swiss Ephemeris or a named equivalent for planetary positions, houses and aspects. Swiss Ephemeris is dual-licensed (AGPL or commercial), so the licence is a decision before the code. Method, version, time zone and house system are printed beneath every chart.
-- **Place and time.** Geocoding of the birthplace and the historical time zone in force on the birth date.
-- **Hosting.** `astro.atlas-interactive.com` on Hostinger. DNS and deployment live outside this repository; the CI workflow only checks and builds.
-- **Voice.** Copy is English for v1. Dutch is a later decision.
+- **Calculation (this slice).** Swiss Ephemeris 2.10.03 in the browser (`@fusionstrings/swisseph-wasm`, MIT wrapper). Commercial / Professional licence from Astrodienst. Marker file `public/se/commercial.ok` (gitignored). Moshier theory until `.se1` loading is a follow-up. Method line names the library, version, tropical zodiac, Placidus, TZ, and “calculated in browser”.
+- **Place and time (this slice).** Nominatim for geocode (1 req/s, session cache). IANA tzdb via `luxon` + `tz-lookup` for the historical offset on the birth date.
+- **Later.** Aspects, interpretive copy, lunar nodes, `.se1` files, Hostinger/DNS, Dutch.
+- **Hosting.** `astro.atlas-interactive.com` on Hostinger. This branch does not deploy.
 
 Astro gives no medical, psychological or financial advice, and shows no chart it has not calculated.
 

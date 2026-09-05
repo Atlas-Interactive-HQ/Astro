@@ -1,0 +1,7 @@
+# Copy this file to commercial.ok after Atlas holds a Swiss Ephemeris
+# Professional License from Astrodienst AG.
+#
+#   cp public/se/commercial.ok.example public/se/commercial.ok
+#
+# The natal WASM will not calculate until commercial.ok is present.
+# Do not commit commercial.ok.
