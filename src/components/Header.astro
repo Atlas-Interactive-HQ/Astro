@@ -56,7 +56,8 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
     font-weight: 500;
     color: var(--ink-deep);
     text-decoration: none;
-    border-bottom: 2px solid transparent;
+    /* Field, not transparent: the bundler emits #0000 for transparent. */
+    border-bottom: 2px solid var(--field);
   }
 
   .site-nav a:hover {
@@ -65,7 +66,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
 
   .site-nav a[aria-current='page'] {
     font-weight: 600;
-    border-bottom-color: var(--accent-deep);
+    border-bottom-color: var(--ink);
   }
 
   @media (max-width: 36rem) {

@@ -31,7 +31,8 @@
   --ink-deep: var(--dark-petrol); /* body and UI text on field and paper */
   --on-ground: var(--soft-sand);  /* type on the teal ground */
 
-  /* Roles — accents, kept to the 10–15% the canon allows */
+  /* Roles — accents, kept to the 10–15% the canon allows.
+     Burnt Orange is not chrome: 1.96:1 on Warm Ochre. */
   --accent: var(--burnt-orange);
   --accent-deep: var(--terracotta);
   --rule: var(--muted-sage);      /* decorative hairlines only */
