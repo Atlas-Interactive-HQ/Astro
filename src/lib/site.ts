@@ -3,7 +3,7 @@ export const SITE_URL = 'https://astro.atlas-interactive.com';
 export const ATLAS_URL = 'https://atlas-interactive.com';
 
 export const DEFAULT_DESCRIPTION =
-  'Astro draws birth charts from the real positions of the Sun, Moon and planets, calculated in the browser with Swiss Ephemeris. An Atlas Interactive product.';
+  'Astro draws birth charts from the real positions of the Sun, Moon and planets, calculated in the browser. Atlas Interactive studio.';
 
 export const NAV = [
   { href: '/', label: 'Home' },

@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import ChartForm from '../components/ChartForm.astro';
 ---
-<Base title="Chart" description="Enter a date, time and place of birth. The natal chart is calculated in this browser with Swiss Ephemeris.">
+<Base title="Chart" description="Enter a date, time and place of birth. Studio access; the natal chart is calculated in this browser with astronomy-engine.">
   <section class="page-head shell">
     <p class="eyebrow">Chart</p>
     <h1>Begin a chart</h1>
@@ -16,7 +16,7 @@ import ChartForm from '../components/ChartForm.astro';
     <aside class="chart-aside flow" aria-labelledby="next-title">
       <h2 id="next-title" class="h3">What happens next</h2>
       <p>
-        The place is resolved to coordinates (Nominatim, if you use the list) and to the IANA time zone in force on that date. Swiss Ephemeris then calculates the chart in this browser. Nothing is posted to Atlas for the calculation.
+        Studio access for @atlas-interactive.com. The place is resolved to coordinates (Nominatim, if you use the list) and to the IANA time zone in force on that date. astronomy-engine then calculates the chart in this browser. Birth facts are not sent to Google.
       </p>
       <p>
         Without a time of birth, planets are placed at local noon. Houses and the rising sign stay blank.
@@ -43,3 +43,9 @@ import ChartForm from '../components/ChartForm.astro';
     padding-top: var(--space-2);
   }
 </style>
+
+<script>
+  import { requireStudio } from '../lib/auth/guard';
+
+  requireStudio('/chart');
+</script>

@@ -16,8 +16,16 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
         ))}
       </ul>
     </nav>
+    <div class="studio-slot" data-studio hidden></div>
   </div>
 </header>
+
+<script>
+  import { mountStudioSlot } from '../lib/auth/header-client';
+
+  const slot = document.querySelector<HTMLElement>('[data-studio]');
+  if (slot) mountStudioSlot(slot);
+</script>
 
 <style>
   .site-header {
@@ -67,6 +75,34 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
   .site-nav a[aria-current='page'] {
     font-weight: 600;
     border-bottom-color: var(--ink);
+  }
+
+  .studio-slot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2);
+    font-size: var(--step--1);
+  }
+
+  .studio-who {
+    color: var(--ink-deep);
+  }
+
+  .studio-link {
+    font-weight: 500;
+  }
+
+  .studio-out {
+    min-height: 2.25rem;
+    padding: 0.35em 0.9em;
+    border: 2px solid var(--ink-deep);
+    border-radius: var(--radius-round);
+    background-color: var(--paper);
+    color: var(--ink-deep);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
   }
 
   @media (max-width: 36rem) {

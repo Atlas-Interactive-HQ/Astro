@@ -3,7 +3,7 @@
   Chart input. Birth facts stay in this browser (sessionStorage) and are
   never given `name` attributes, so a non-JS submit still sends nothing.
   Place lookup uses Nominatim (network, coordinates only). The natal
-  calculation runs in WASM on /reading.
+  calculation runs in this browser on /reading (astronomy-engine).
 */
 ---
 <form class="chart-form sheet" action="/reading" method="get" aria-labelledby="chart-form-title">
@@ -71,7 +71,7 @@
   <div class="chart-form__actions">
     <button class="button" type="submit">Continue to the reading</button>
     <p class="note" data-form-status>
-      The natal calculation runs in this browser with Swiss Ephemeris. Place lookup is the only network call, and only if you use the suggestion list.
+      The natal calculation runs in this browser with astronomy-engine. Place lookup is a Nominatim network call for coordinates only. Birth facts are not sent to Google.
     </p>
   </div>
 </form>
