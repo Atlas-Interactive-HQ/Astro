@@ -10,10 +10,11 @@ import { SITE_NAME } from '../lib/site';
     <p class="eyebrow">A birth chart, drawn from the real sky</p>
     <h1 class="hero__title">The sky as it stood the hour you were born.</h1>
     <p class="lede measure center">
-      Astro draws your birth chart from the actual positions of the Sun, Moon and planets, calculated in this browser with Swiss Ephemeris. No approximations and no invented placements.
+      Astro draws a birth chart from the actual positions of the Sun, Moon and planets, calculated in this browser. Chart work is studio access for @atlas-interactive.com. No invented placements.
     </p>
     <div class="hero__actions">
       <a class="button" href="/chart">Begin a chart</a>
+      <a class="link-arrow" href="/auth?next=/chart">Studio sign-in</a>
       <a class="link-arrow" href="/learn">What a chart is</a>
     </div>
   </section>
@@ -31,7 +32,7 @@ import { SITE_NAME } from '../lib/site';
       <li class="principle">
         <span class="principle__numeral" aria-hidden="true">II</span>
         <h3>One ephemeris</h3>
-        <p>Positions come from Swiss Ephemeris or a named equivalent, never from a lookup table or a guess.</p>
+        <p>Positions come from astronomy-engine, named on every chart, never from a guess.</p>
       </li>
       <li class="principle">
         <span class="principle__numeral" aria-hidden="true">III</span>

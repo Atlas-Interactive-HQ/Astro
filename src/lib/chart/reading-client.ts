@@ -1,4 +1,5 @@
-import { calculateChart, configured, loadSwe } from './ephemeris';
+import { requireStudio } from '../auth/guard';
+import { calculateChart } from './engine';
 import { toDms } from './format';
 import { loadDraft } from './storage';
 import { wheelSvg } from './wheel';
@@ -18,32 +19,18 @@ function planetTable(rows: PlanetRow[], withHouses: boolean): string {
 }
 
 export async function mountReading(root: HTMLElement): Promise<void> {
+  if (!requireStudio('/reading')) return;
   const draft = loadDraft();
   if (!draft) {
     root.innerHTML = empty(
       'No chart is waiting.',
-      'Begin from the chart form. The three facts stay in this browser (session storage) and are not written into the address.',
-    );
-    return;
-  }
-  if (!(await configured())) {
-    root.innerHTML = empty(
-      'Calculation is not configured.',
-      'Swiss Ephemeris is present as a WASM binding, but the commercial-licence marker is missing. Place public/se/commercial.ok as described in the README. Until then Astro draws no chart and invents no positions.',
-    );
-    return;
-  }
-  const swe = await loadSwe();
-  if (!swe) {
-    root.innerHTML = empty(
-      'Calculation is not configured.',
-      'The Swiss Ephemeris WASM module did not load. Nothing is invented in its place.',
+      'Begin from the chart form. The three facts stay in this browser (session storage) and are not written into the address. Google is not sent the birth moment.',
     );
     return;
   }
 
   try {
-    const chart = await calculateChart(draft, swe);
+    const chart = calculateChart(draft);
     const withHouses = Boolean(chart.houses);
     const houseBlock = chart.houses
       ? `<h3>Houses (Placidus)</h3>

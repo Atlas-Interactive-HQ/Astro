@@ -1,14 +1,14 @@
-export const PLANET_IDS = [
-  { id: 0, name: 'Sun' },
-  { id: 1, name: 'Moon' },
-  { id: 2, name: 'Mercury' },
-  { id: 3, name: 'Venus' },
-  { id: 4, name: 'Mars' },
-  { id: 5, name: 'Jupiter' },
-  { id: 6, name: 'Saturn' },
-  { id: 7, name: 'Uranus' },
-  { id: 8, name: 'Neptune' },
-  { id: 9, name: 'Pluto' },
+export const PLANET_NAMES = [
+  'Sun',
+  'Moon',
+  'Mercury',
+  'Venus',
+  'Mars',
+  'Jupiter',
+  'Saturn',
+  'Uranus',
+  'Neptune',
+  'Pluto',
 ] as const;
 
 export const SIGNS = [
@@ -30,8 +30,8 @@ export const SIGN_ABBR = ['Ar', 'Ta', 'Ge', 'Cn', 'Le', 'Vi', 'Li', 'Sc', 'Sg', 
 
 export const STORAGE_KEY = 'atlas-astro.chart-v1';
 
-export const SE_VERSION = '2.10.03';
-export const SE_BINDING = '@fusionstrings/swisseph-wasm';
+export const ENGINE_NAME = 'astronomy-engine';
+export const ENGINE_VERSION = '2.1.19';
 export const HOUSE_SYSTEM = 'Placidus';
 export const ZODIAC = 'tropical';
 

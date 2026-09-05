@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Studio sign-in" description="Atlas Interactive studio access for @atlas-interactive.com accounts.">
+  <script is:inline slot="head" src="https://accounts.google.com/gsi/client" async defer></script>
+  <section class="page-head shell" data-auth>
+    <p class="eyebrow">Studio</p>
+    <h1>Atlas Astro — studio</h1>
+    <p class="lede measure">
+      Sign in with a Google account on @atlas-interactive.com. The natal calculation stays in this browser. Google only sees that you signed in — never the birth date, time or place.
+    </p>
+    <div class="sheet auth-card flow">
+      <p>Atlas Interactive studio. Other domains are refused.</p>
+      <div class="google-button" data-google-button></div>
+      <p class="note" data-auth-status>Preparing Google sign-in…</p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { mountAuthPage } from '../lib/auth/auth-page';
+
+  const root = document.querySelector<HTMLElement>('[data-auth]');
+  if (root) mountAuthPage(root);
+</script>
+
+<style>
+  .auth-card {
+    max-width: 28rem;
+    --flow: var(--space-3);
+  }
+
+  .google-button {
+    min-height: 2.75rem;
+  }
+</style>
