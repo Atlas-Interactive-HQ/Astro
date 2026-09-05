@@ -11,8 +11,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check && node scripts/brand-check.mjs",
+    "check": "astro check && node scripts/brand-check.mjs && node scripts/brand-check-mutate.mjs",
     "check:brand": "node scripts/brand-check.mjs",
+    "check:dist": "node scripts/brand-check.mjs --dist",
     "astro": "astro"
   },
   "dependencies": {

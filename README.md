@@ -34,8 +34,9 @@ Other scripts:
 ```bash
 npm run build      # static build to dist/
 npm run preview    # serve dist/ locally
-npm run check      # astro check (types) + the brand check
+npm run check      # astro check (types) + the brand check + mutation test
 npm run check:brand
+npm run check:dist # brand check against dist/ (run after build)
 ```
 
 ## Structure
@@ -55,8 +56,9 @@ src/
   lib/site.ts           site name, URLs, nav
   pages/                index, chart, reading, learn, 404
 public/favicon.svg
-scripts/brand-check.mjs the brand rules as an executable check
-.github/workflows/ci.yml  check + build on pull requests (no deploy)
+scripts/brand-check.mjs the brand rules as an executable check (`--dist` scans the build)
+scripts/brand-check-mutate.mjs  injects 21 violations and expects each to fail
+.github/workflows/ci.yml  check + build + dist brand check on pull requests (no deploy)
 ```
 
 ## Design system
@@ -69,8 +71,8 @@ Nine hues, used flat. Components refer to roles, never to hues directly.
 | Soft Sand | `#F2D6A2` | `--paper`, sheets laid on the field; type on the teal ground |
 | Deep Teal | `#1F4E4A` | `--ink`, headlines and structure; `--ground`, the footer band |
 | Dark Petrol | `#153937` | `--ink-deep`, body and UI text; focus ring |
-| Burnt Orange | `#C65A2E` | `--accent`, link underlines |
-| Terracotta | `#A63D2F` | `--accent-deep`, the sun, numerals, the active-nav mark |
+| Burnt Orange | `#C65A2E` | `--accent`, reserved. 1.96:1 on the ochre field — too low for links or chrome |
+| Terracotta | `#A63D2F` | `--accent-deep`, the sun, numerals, the geo-rule mark |
 | Muted Sage | `#7FA39A` | `--rule`, decorative hairlines; the far wave |
 | Dusty Coral | `#D97A5B` | reserved |
 | Clay Brown | `#8C4A2F` | the grain tint |
@@ -79,10 +81,10 @@ Type: Playfair Display for headlines (600, 700, 400 italic), Inter for body and 
 
 Rules, as canon states them and as `scripts/brand-check.mjs` enforces them:
 
-- No `#000000`, no `#FFFFFF`, no hex outside the nine, no `rgb()`, `hsl()`, `color-mix()` or `white`/`black` keywords.
+- No `#000000`, no `#FFFFFF`, no hex outside the nine, no `rgb()`, `hsl()`, `color-mix()`, no named CSS colours, no `transparent` (the bundler emits `#0000`).
 - No gradients, no shadows, no glass. Flat fields only. Texture comes from a matte grain tile whose colour is pinned to Clay Brown.
 - Only Playfair Display and Inter, with generic fallbacks.
-- Every text/background pairing the stylesheet uses meets WCAG AA. The check prints the measured ratios. Two consequences worth knowing: Deep Teal on Warm Ochre is 4.29:1, so it is used for large type only, and body text on the ochre field is Dark Petrol at 5.76:1.
+- Every declared text/background pairing meets WCAG AA. The check prints the measured ratios. Two consequences worth knowing: Deep Teal on Warm Ochre is 4.29:1, so it is used for large type only, and body text on the ochre field is Dark Petrol at 5.76:1. Link underlines and the active-nav mark use Dark Petrol / Deep Teal for the same reason: Burnt Orange and Terracotta fall below 3:1 on the ochre field.
 
 ## Accessibility
 

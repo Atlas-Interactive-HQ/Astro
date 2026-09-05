@@ -3,19 +3,27 @@
   Brand guardrail — the executable form of the Warm Geo v2 rules for Astro.
 
   1. Colour: only the nine brand hues may appear. No #000000, no #FFFFFF,
-     no other hex, no rgb()/hsl()/color-mix(), no `white`/`black` keywords.
+     no other hex, no rgb()/hsl()/color-mix(), no named CSS colours, no
+     `transparent` (the bundler emits #0000).
   2. Finish: no gradients, no shadows, no glass. Flat fields only.
   3. Type: only Playfair Display and Inter, with plain generic fallbacks.
   4. Contrast: every declared text/background pairing meets WCAG AA.
 
   Scans src/ and public/. Exits non-zero on any failure so CI blocks it.
 */
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const SCAN_DIRS = ['src', 'public'];
+if (process.argv.includes('--dist')) {
+  if (!existsSync(join(ROOT, 'dist'))) {
+    console.error('brand-check: --dist given but dist/ is missing — run npm run build first');
+    process.exit(1);
+  }
+  SCAN_DIRS.push('dist');
+}
 const EXTS = new Set(['.astro', '.css', '.ts', '.mjs', '.js', '.svg', '.html']);
 
 const BRAND = {
@@ -44,6 +52,10 @@ const ALLOWED_FONT_TOKENS = new Set([
   'inherit',
 ]);
 
+// CSS Color Module named keywords. Delimited so `--deep-teal` and `white-space` do not match.
+const NAMED_COLOURS =
+  'aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgreen|lightgrey|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen|black';
+
 // Rules that apply to CSS text (stylesheets, <style> blocks, style="" attributes).
 const CSS_RULES = [
   { re: /(linear|radial|conic)-gradient\s*\(/i, why: 'gradient — flat fields only' },
@@ -51,7 +63,8 @@ const CSS_RULES = [
   { re: /drop-shadow\s*\(/i, why: 'drop-shadow filter — no depth effects' },
   { re: /backdrop-filter\s*:/i, why: 'backdrop-filter — no glass effects' },
   { re: /\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color-mix)\s*\(/i, why: 'derived or alpha colour — use the nine hues flat' },
-  { re: /(?:^|[\s:,(])(?:white|black)\s*(?=[;)\s,}!]|$)/im, why: 'pure white/black keyword' },
+  { re: new RegExp(`(?:^|[\\s:,(])(?:${NAMED_COLOURS})\\s*(?=[;)\\s,}!]|$)`, 'im'), why: 'named CSS colour — use the nine hues' },
+  { re: /(?:^|[\s:,(])transparent\s*(?=[;)\s,}!]|$)/im, why: 'transparent keyword — the bundler emits #0000; use a brand surface token' },
 ];
 
 // Text/background pairs as the stylesheet uses them. Threshold: 4.5 for body
@@ -94,6 +107,7 @@ function cssContexts(file, text) {
   const blocks = [];
   for (const m of text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)) blocks.push(m[1]);
   for (const m of text.matchAll(/\sstyle\s*=\s*"([^"]*)"/gi)) blocks.push(m[1]);
+  for (const m of text.matchAll(/\sstyle\s*=\s*'([^']*)'/gi)) blocks.push(m[1]);
   return blocks;
 }
 
