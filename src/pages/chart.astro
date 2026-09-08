@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import ChartForm from '../components/ChartForm.astro';
 ---
 <Base title="Chart" description="Enter a date, time and place of birth. Studio access; the natal chart is calculated in this browser with astronomy-engine.">
+  <div class="band">
   <section class="page-head shell">
     <p class="eyebrow">Chart</p>
     <h1>Begin a chart</h1>
@@ -10,6 +11,7 @@ import ChartForm from '../components/ChartForm.astro';
       Three facts fix a sky: the day, the hour and the place. The more exact the hour, the more exact the houses.
     </p>
   </section>
+  </div>
 
   <section class="shell chart-layout section section--last">
     <ChartForm />

@@ -179,15 +179,36 @@ a:hover {
   padding-bottom: var(--space-5);
 }
 
-/* A sheet: paper laid on the field. Carries its own grain. */
+/* A sheet: paper laid on the field, edged in Deep Teal so it reads on the sand. */
 .sheet {
   background-color: var(--paper);
   background-image: var(--grain);
   background-repeat: repeat;
   background-blend-mode: multiply;
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
   padding: clamp(1.5rem, 4vw, 3rem);
   color: var(--ink-deep);
+}
+
+/* A band: the ceremonial Warm Ochre strip across the full width of the field.
+   Page heads and the home hero sit on it; body copy on it stays Dark Petrol. */
+.band {
+  background-color: var(--band);
+  background-image: var(--grain);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  color: var(--ink-deep);
+}
+
+.band .eyebrow,
+.band .lede,
+.band .note {
+  color: var(--ink-deep);
+}
+
+.band .button--quiet {
+  background-color: var(--paper);
 }
 
 /* Geometric separator: two rules meeting a small terracotta diamond. */

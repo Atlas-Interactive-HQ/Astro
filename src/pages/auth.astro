@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 ---
 <Base title="Studio sign-in" description="Atlas Interactive studio access for @atlas-interactive.com accounts.">
   <script is:inline slot="head" src="https://accounts.google.com/gsi/client" async defer></script>
+  <div class="band">
   <section class="page-head shell" data-auth>
     <p class="eyebrow">Studio</p>
     <h1>Atlas Astro — studio</h1>
@@ -15,6 +16,7 @@ import Base from '../layouts/Base.astro';
       <p class="note" data-auth-status>Preparing Google sign-in…</p>
     </div>
   </section>
+  </div>
 </Base>
 
 <script>
