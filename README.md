@@ -77,11 +77,11 @@ Nine hues, used flat. Components refer to roles, never to hues directly.
 
 | Hue | Hex | Role in Astro |
 | --- | --- | --- |
-| Warm Ochre | `#E6A24A` | `--field`, the page ground |
-| Soft Sand | `#F2D6A2` | `--paper`, sheets laid on the field; type on the teal ground |
-| Deep Teal | `#1F4E4A` | `--ink`, headlines and structure; `--ground`, the footer band |
-| Dark Petrol | `#153937` | `--ink-deep`, body and UI text; focus ring |
-| Burnt Orange | `#C65A2E` | `--accent`, reserved. 1.96:1 on the ochre field — too low for links or chrome |
+| Soft Sand | `#F2D6A2` | `--field`, the page ground (the studio-site family); `--paper`, sheets edged in teal; type on the teal ground |
+| Warm Ochre | `#E6A24A` | `--band`, the ceremonial strip: home hero, page heads, the wheel's core |
+| Deep Teal | `#1F4E4A` | `--ink`, headlines and structure; `--ground`, the header and footer bands |
+| Dark Petrol | `#153937` | `--ink-deep`, body and UI text on field, paper and band; focus ring |
+| Burnt Orange | `#C65A2E` | `--accent`, reserved. 3.05:1 on Soft Sand and 1.96:1 on Warm Ochre — too low for links or chrome |
 | Terracotta | `#A63D2F` | `--accent-deep`, the sun, numerals, the geo-rule mark |
 | Muted Sage | `#7FA39A` | `--rule`, decorative hairlines; the far wave |
 | Dusty Coral | `#D97A5B` | reserved |
@@ -94,7 +94,7 @@ Rules, as canon states them and as `scripts/brand-check.mjs` enforces them:
 - No `#000000`, no `#FFFFFF`, no hex outside the nine, no `rgb()`, `hsl()`, `color-mix()`, no named CSS colours, no `transparent` (the bundler emits `#0000`).
 - No gradients, no shadows, no glass. Flat fields only. Texture comes from a matte grain tile whose colour is pinned to Clay Brown.
 - Only Playfair Display and Inter, with generic fallbacks.
-- Every declared text/background pairing meets WCAG AA. The check prints the measured ratios. Two consequences worth knowing: Deep Teal on Warm Ochre is 4.29:1, so it is used for large type only, and body text on the ochre field is Dark Petrol at 5.76:1. Link underlines and the active-nav mark use Dark Petrol / Deep Teal for the same reason: Burnt Orange and Terracotta fall below 3:1 on the ochre field.
+- Every declared text/background pairing meets WCAG AA. The check prints the measured ratios. Two consequences worth knowing: Deep Teal on Warm Ochre is 4.29:1, so on the ochre band it is used for large type only, and body text on the band is Dark Petrol at 5.76:1. Link underlines use Dark Petrol / Deep Teal for the same reason: Burnt Orange and Terracotta fall below 3:1 on the band and stay decorative on the field.
 
 ## Accessibility
 

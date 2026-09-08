@@ -70,17 +70,17 @@ const CSS_RULES = [
 // Text/background pairs as the stylesheet uses them. Threshold: 4.5 for body
 // text, 3.0 for large text (≥ 24px, or ≥ 18.66px bold) and UI boundaries.
 const CONTRAST_PAIRS = [
-  ['Dark Petrol', 'Warm Ochre', 4.5, 'body and UI text on the field'],
-  ['Deep Teal', 'Warm Ochre', 3.0, 'headlines on the field (large type)'],
-  ['Dark Petrol', 'Soft Sand', 4.5, 'body text on sheets and inputs'],
-  ['Deep Teal', 'Soft Sand', 4.5, 'labels and headings on sheets'],
-  ['Soft Sand', 'Deep Teal', 4.5, 'footer text and primary button label'],
+  ['Dark Petrol', 'Soft Sand', 4.5, 'body and UI text on the field and on sheets'],
+  ['Deep Teal', 'Soft Sand', 4.5, 'headlines, labels and structure on the field'],
+  ['Dark Petrol', 'Warm Ochre', 4.5, 'eyebrow and lede on the ceremonial band'],
+  ['Deep Teal', 'Warm Ochre', 3.0, 'headlines on the band (large type)'],
+  ['Soft Sand', 'Deep Teal', 4.5, 'header nav, footer text and primary button label'],
   ['Soft Sand', 'Dark Petrol', 4.5, 'button label on hover'],
   ['Terracotta', 'Soft Sand', 3.0, 'numerals on sheets (large type)'],
-  ['Deep Teal', 'Soft Sand', 3.0, 'input border on sheets (UI boundary)'],
-  ['Dark Petrol', 'Warm Ochre', 3.0, 'focus ring on the field'],
-  ['Dark Petrol', 'Soft Sand', 3.0, 'focus ring on sheets'],
-  ['Soft Sand', 'Deep Teal', 3.0, 'focus ring on the footer'],
+  ['Deep Teal', 'Soft Sand', 3.0, 'sheet and input borders (UI boundary)'],
+  ['Dark Petrol', 'Soft Sand', 3.0, 'focus ring on the field'],
+  ['Dark Petrol', 'Warm Ochre', 3.0, 'focus ring on the band'],
+  ['Soft Sand', 'Deep Teal', 3.0, 'focus ring on header and footer'],
 ];
 
 const failures = [];

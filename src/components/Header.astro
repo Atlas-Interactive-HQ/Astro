@@ -4,7 +4,7 @@ import { NAV } from '../lib/site';
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isActive = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`));
 ---
-<header class="site-header">
+<header class="site-header on-ground">
   <div class="shell site-header__inner">
     <a class="wordmark" href="/" aria-label="Astro, home">Astro</a>
     <nav class="site-nav" aria-label="Primary">
@@ -30,6 +30,11 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
 <style>
   .site-header {
     padding-block: var(--space-3);
+    background-color: var(--ground);
+    background-image: var(--grain);
+    background-repeat: repeat;
+    background-blend-mode: multiply;
+    color: var(--on-ground);
   }
 
   .site-header__inner {
@@ -45,7 +50,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
     font-weight: 700;
     font-size: var(--step-2);
     letter-spacing: -0.01em;
-    color: var(--ink);
+    color: var(--on-ground);
     text-decoration: none;
   }
 
@@ -62,19 +67,19 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
     display: inline-block;
     padding-block: 0.25rem;
     font-weight: 500;
-    color: var(--ink-deep);
+    color: var(--on-ground);
     text-decoration: none;
-    /* Field, not transparent: the bundler emits #0000 for transparent. */
-    border-bottom: 2px solid var(--field);
+    /* Ground, not transparent: the bundler emits #0000 for transparent. */
+    border-bottom: 2px solid var(--ground);
   }
 
   .site-nav a:hover {
-    border-bottom-color: var(--ink);
+    border-bottom-color: var(--on-ground);
   }
 
   .site-nav a[aria-current='page'] {
     font-weight: 600;
-    border-bottom-color: var(--ink);
+    border-bottom-color: var(--band);
   }
 
   .studio-slot {
@@ -86,7 +91,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
   }
 
   .studio-who {
-    color: var(--ink-deep);
+    color: var(--on-ground);
   }
 
   .studio-link {

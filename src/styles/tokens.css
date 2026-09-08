@@ -21,18 +21,21 @@
   --dark-petrol: #153937;
   --clay-brown: #8C4A2F;
 
-  /* Roles — surfaces */
-  --field: var(--warm-ochre);   /* the page ground: warm atmosphere */
-  --paper: var(--soft-sand);    /* sheets laid on the field: forms, prose */
-  --ground: var(--deep-teal);   /* the inverted band: footer */
+  /* Roles — surfaces. Soft Sand is the field, the same field as the studio
+     site and Create; Warm Ochre is the ceremonial band (hero, page heads);
+     Deep Teal is the structure (header, footer). */
+  --field: var(--soft-sand);    /* the page ground */
+  --band: var(--warm-ochre);    /* ceremonial strips laid across the field */
+  --paper: var(--soft-sand);    /* sheets on the field, edged in Deep Teal */
+  --ground: var(--deep-teal);   /* the inverted bands: header and footer */
 
   /* Roles — type. Contrast pairs are asserted in the brand check. */
-  --ink: var(--deep-teal);        /* headlines and structure (large type) */
-  --ink-deep: var(--dark-petrol); /* body and UI text on field and paper */
+  --ink: var(--deep-teal);        /* headlines and structure; 6.64:1 on the sand field */
+  --ink-deep: var(--dark-petrol); /* body and UI text on field, paper and band */
   --on-ground: var(--soft-sand);  /* type on the teal ground */
 
   /* Roles — accents, kept to the 10–15% the canon allows.
-     Burnt Orange is not chrome: 1.96:1 on Warm Ochre. */
+     Burnt Orange is not chrome: 3.05:1 on Soft Sand, 1.96:1 on Warm Ochre. */
   --accent: var(--burnt-orange);
   --accent-deep: var(--terracotta);
   --rule: var(--muted-sage);      /* decorative hairlines only */

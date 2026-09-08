@@ -5,6 +5,7 @@ import GeoRule from '../components/GeoRule.astro';
 import { SITE_NAME } from '../lib/site';
 ---
 <Base title={SITE_NAME}>
+  <div class="band">
   <section class="hero shell">
     <SkyMark size={176} class="hero__mark" />
     <p class="eyebrow">A birth chart, drawn from the real sky</p>
@@ -18,6 +19,7 @@ import { SITE_NAME } from '../lib/site';
       <a class="link-arrow" href="/learn">What a chart is</a>
     </div>
   </section>
+  </div>
 
   <GeoRule />
 
