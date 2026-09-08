@@ -29,6 +29,8 @@ export const SIGNS = [
 export const SIGN_ABBR = ['Ar', 'Ta', 'Ge', 'Cn', 'Le', 'Vi', 'Li', 'Sc', 'Sg', 'Cp', 'Aq', 'Pi'] as const;
 
 export const STORAGE_KEY = 'atlas-astro.chart-v1';
+export const RECALL_KEY = 'atlas-astro.readings-v1';
+export const RECALL_CAP = 8;
 
 export const ENGINE_NAME = 'astronomy-engine';
 export const ENGINE_VERSION = '2.1.19';
